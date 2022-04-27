@@ -9,7 +9,7 @@ $cours = getCours();
 
 
 <div class="wrapper">
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="mt-5 mb-3 clearfix">
@@ -30,7 +30,7 @@ $cours = getCours();
                         <?php foreach($cours as $c): ?>
                             <tr>
                                 <th>
-                                    <?php echo $c['nom']; ?>
+                                    <?php echo $c['name']; ?>
                                 </th>
                                 <td>
                                     <?php echo $c['date']; ?>
@@ -39,10 +39,10 @@ $cours = getCours();
                                     <a href="#" class="btn btn-sm btn-primary">
                                         Afficher
                                     </a>
-                                    <a href="#">
+                                    <a href="#" class="btn btn-sm btn-info">
                                         Modifier
                                     </a>
-                                    <a href="#">
+                                    <a href="#" class="btn btn-sm btn-danger">
                                         Supprimmer
                                     </a>
                                 </td>

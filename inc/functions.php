@@ -24,11 +24,12 @@ function getCours(){
     $link = getMysqlConnexion();
 
     // REQUÊTE
-    $sql = "SELECT * FROM employees";
+    $sql = "SELECT * FROM cours";
+
+    $rows = [];
 
     // Loop Résultats
     if($result = mysqli_query($link, $sql)){
-        $rows = [];
         if(mysqli_num_rows($result) > 0){
             while($row = mysqli_fetch_array($result)){
                 $rows[] = $row;
@@ -39,4 +40,6 @@ function getCours(){
 
     // Fermeture connexion BDD
     mysqli_close($link);
+
+    return $rows;
 }
