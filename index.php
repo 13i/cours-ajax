@@ -34,4 +34,4 @@ switch( $action ){
 }
 
 // On affiche le footer si pas AJAX
-if( !isAjax() ) require_once "inc/header.php";
+if( !isAjax() ) require_once "inc/footer.php";

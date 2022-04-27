@@ -19,10 +19,12 @@
   <!-- CSS --> 
   <link rel="stylesheet" href="assets/style.css">
 
+    <!-- JQuery + Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"></script>
+
+    <!-- JS -->
+    <script src="assets/scripts.js"></script>
+
 </head>
 <body>
-
-  <!-- JQuery + Bootstrap -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"></script>
-  

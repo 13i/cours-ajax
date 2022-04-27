@@ -5,7 +5,7 @@
             <div class="col-md-12">
                 <div class="mt-5 mb-3 clearfix">
                     <h2 class="pull-left">Cours</h2>
-                    <a href="index.php?a=c" class="btn btn-success pull-right">
+                    <a href="index.php?a=create" class="btn btn-success pull-right">
                         <i class="fa fa-plus"></i> Ajouter un cours
                     </a>
                 </div>
@@ -27,13 +27,13 @@
                                     <?php echo $c['date']; ?>
                                 </td>
                                 <td>
-                                    <a href="index.php?a=r&id=<?php echo $c['id']; ?>" class="btn btn-sm btn-primary">
+                                    <a href="index.php?a=read&id=<?php echo $c['id']; ?>" class="btn btn-sm btn-primary">
                                         Afficher
                                     </a>
-                                    <a href="index.php?a=u&id=<?php echo $c['id']; ?>" class="btn btn-sm btn-info">
+                                    <a href="index.php?a=update&id=<?php echo $c['id']; ?>" class="btn btn-sm btn-info">
                                         Modifier
                                     </a>
-                                    <a href="index.php?a=d&id=<?php echo $c['id']; ?>" class="btn btn-sm btn-danger">
+                                    <a href="index.php?a=delete&id=<?php echo $c['id']; ?>" class="btn btn-sm btn-danger">
                                         Supprimmer
                                     </a>
                                 </td>
