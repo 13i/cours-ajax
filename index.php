@@ -1,61 +1,37 @@
 <?php
 
-require_once "inc/header.php";
-
-// On récupère la liste des cours
-$cours = getCours();
-
-?>
+require_once "inc/config.php";
+require_once "inc/functions.php";
 
 
-<div class="wrapper">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="mt-5 mb-3 clearfix">
-                    <h2 class="pull-left">Liste des cours</h2>
-                    <a href="#add" class="btn btn-success pull-right">
-                        <i class="fa fa-plus"></i> Ajouter un cours
-                    </a>
-                </div>
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Date</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach($cours as $c): ?>
-                            <tr>
-                                <th>
-                                    <?php echo $c['name']; ?>
-                                </th>
-                                <td>
-                                    <?php echo $c['date']; ?>
-                                </td>
-                                <td>
-                                    <a href="#" class="btn btn-sm btn-primary">
-                                        Afficher
-                                    </a>
-                                    <a href="#" class="btn btn-sm btn-info">
-                                        Modifier
-                                    </a>
-                                    <a href="#" class="btn btn-sm btn-danger">
-                                        Supprimmer
-                                    </a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>        
-    </div>
-</div>
+// On récupère l'action
+$allowedActions = ['list', 'create', 'read', 'update', 'delete'];
+$action = isset($_GET['a']) && in_array($_GET['a'], $allowedActions) ? $_GET['a'] : 'list';
 
-<?php
+// On récupère l'ID si besoin
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
+// On affiche le header si pas AJAX
+if( !isAjax() ) require_once "inc/header.php";
 
-require_once "inc/footer.php";
+// On récupère le bon contenu
+switch( $action ){
+    case 'list':
+        listCours();
+        break;
+    case 'create':
+        createCours();
+        break;
+    case 'read':
+        readCours($id);
+        break;
+    case 'update':
+        updateCours($id);
+        break;
+    case 'delete':
+        deleteCours($id);
+        break;
+}
+
+// On affiche le footer si pas AJAX
+if( !isAjax() ) require_once "inc/header.php";

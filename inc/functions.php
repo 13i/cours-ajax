@@ -6,19 +6,25 @@
 function getMysqlConnexion() {
     // Connexion
     $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-    
     // Si erreur
     if( $link === false ){
         die("ERREUR : Impossible de se connecter à MySQL. Message : " . mysqli_connect_error());
     }
-
     return $link;
+}
+
+/**
+ * Détermine si la requête a été faite en AJAX
+ */
+function isAjax(){
+    return  !empty($_SERVER['HTTP_X_REQUESTED_WITH']) 
+            && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 }
 
 /**
  * Liste des cours
  */
-function getCours(){
+function listCours(){
 
     // Connexion BDD
     $link = getMysqlConnexion();
@@ -41,5 +47,26 @@ function getCours(){
     // Fermeture connexion BDD
     mysqli_close($link);
 
-    return $rows;
+    // On affiche l'HTML
+    require_once "tpl/list.php";
+}
+
+
+function createCours(){
+
+
+    // On affiche l'HTML
+    require_once "tpl/create.php";
+}
+
+function readCours($id){
+
+}
+
+function updateCours($id){
+
+}
+
+function deleteCours($id){
+
 }
