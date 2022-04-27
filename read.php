@@ -3,9 +3,10 @@
 require_once "inc/bootstrap.php";
 
 try {
+    $id = getId();
     $content = tpl(
-        'list',
-        [ 'cours' => $C->list() ]
+        'read',
+        [ 'cours' => $C->read( $id ) ]
     );
     respond( $content );
 } catch( Exception $e ) {

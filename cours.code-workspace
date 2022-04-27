@@ -7,7 +7,11 @@
 	"settings": {},
 	"extensions": {
 		"recommendations": [
-			"yzhang.markdown-all-in-one"
+			"yzhang.markdown-all-in-one",
+			"esbenp.prettier-vscode",
+			"xdebug.php-pack",
+			"rifi2k.format-html-in-php",
+			"bmewburn.vscode-intelephense-client"
 		]
 	}
 }

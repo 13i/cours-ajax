@@ -1,19 +1,6 @@
 <?php
 
 /**
- * Connexion BDD
- */
-function getMysqlConnexion() {
-    // Connexion
-    $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-    // Si erreur
-    if( $link === false ){
-        die("ERREUR : Impossible de se connecter à MySQL. Message : " . mysqli_connect_error());
-    }
-    return $link;
-}
-
-/**
  * Détermine si la requête a été faite en AJAX
  */
 function isAjax(){
@@ -22,72 +9,105 @@ function isAjax(){
 }
 
 /**
- * Liste des cours
+ * Retourne le contenu (sans HEAD + FOOT en Ajax)
  */
-function listCours(){
+function respond( $content ) 
+{
+    if( !isAjax() ) require_once TPL . DS . 'header.php';
+    echo $content;
+    if( !isAjax() ) require_once TPL . DS . 'footer.php';
+}
 
-    // Connexion BDD
-    $link = getMysqlConnexion();
+/**
+ * Rendu d'un TPL avec ses données
+ */
+function tpl( $file, $data=[] )
+{
+    extract( $data );
+    ob_start();
+    require_once TPL . DS . $file . '.php';
+    return ob_get_clean();
+}
 
-    // REQUÊTE
-    $sql = "SELECT * FROM cours";
-
-    $rows = [];
-
-    // Loop Résultats
-    if($result = mysqli_query($link, $sql)){
-        if(mysqli_num_rows($result) > 0){
-            while($row = mysqli_fetch_array($result)){
-                $rows[] = $row;
-            }
-        }
-        mysqli_free_result($result);
+/**
+ * Récupère le paramètre GET['id']
+ */
+function getId()
+{
+    if( !isset( $_GET['id'] ) )
+    {
+        throw new Exception( 'ID not set.' );
     }
-
-    // Fermeture connexion BDD
-    mysqli_close($link);
-
-    // On affiche l'HTML
-    require_once "tpl/list.php";
+    if( !is_numeric( $_GET['id'] ) )
+    {
+        throw new Exception( 'Invalid ID.' );
+    }
+    return $_GET['id'];
 }
 
-
-function createCours(){
-
-
-    // On affiche l'HTML
-    require_once "tpl/create.php";
+/**
+ * Met en forme un input[type="text"]
+ */
+function input( $field, $value = null )
+{
+    global $C;
+    $fieldNames = [
+        'name' => 'Nom',
+        'url' => 'Url de la vidéo Youtube',
+        'date' => 'Date du cours',
+        'duration' => 'Durée de la vidéo',
+        'teacher' => 'Professeur'
+    ];
+    if( isset($_POST[$field]) ){
+        $value = $_POST[$field];
+    }
+    ?>
+    <div class="form-group">
+        <label for="<?php echo $field; ?>"><?php echo $fieldNames[$field]; ?></label>
+        <input type="text" class="form-control" name="<?php echo $field; ?>" id="<?php echo $field; ?>" <?php if($value) echo 'value="'.$value.'"' ?>>
+        <?php if(isset($C->validationErrors[$field])): ?>
+            <div class="error">
+                <?php echo $C->validationErrors[$field]; ?>
+            </div>           
+        <?php endif; ?>
+    </div>
+    <?php
 }
 
-function readCours($id){
-
-    // Connexion BDD
-    $link = getMysqlConnexion();
-
-    // REQUÊTE
-    $sql = "SELECT * FROM cours WHERE id=$id";
-    $query = mysqli_query($link, $sql);     
-    $c = mysqli_fetch_array($query); 
-
-    // On affiche l'HTML
-    require_once "tpl/read.php";
+/**
+ * Met en forme un textarea
+ */
+function textarea( $field, $value = null )
+{
+    global $C;
+    $fieldNames = [
+        'description' => 'Description',
+    ];
+    if( isset($_POST[$field]) ){
+        $value = $_POST[$field];
+    }
+    ?>
+    <div class="form-group">
+        <label for="<?php echo $field; ?>"><?php echo $fieldNames[$field]; ?></label>
+        <textarea class="form-control" name="<?php echo $field; ?>" id="<?php echo $field; ?>"><?php if($value) echo $value; ?></textarea>
+        <?php if(isset($C->validationErrors[$field])): ?>
+            <div class="error">
+                <?php echo $C->validationErrors[$field]; ?>
+            </div>           
+        <?php endif; ?>
+    </div>
+    <?php
 }
 
-function updateCours($id){
-
-    // Connexion BDD
-    $link = getMysqlConnexion();
-
-    // REQUÊTE
-    $sql = "SELECT * FROM cours WHERE id=$id";
-    $query = mysqli_query($link, $sql);     
-    $c = mysqli_fetch_array($query); 
-
-    // On affiche l'HTML
-    require_once "tpl/update.php";
-
-}
-
-function deleteCours($id){
-
+/**
+ * Transforme une URL youtube en URL embed
+ */
+function getYoutubeEmbedUrl($url)
+{
+    $parsed = parse_url($url);
+    if( isset($parsed['path']) && $parsed['path'] == '/watch' ){
+        parse_str( $parsed['query'], $params );
+        return "https://www.youtube.com/embed/{$params['v']}";
+    }
+    return $url;
 }

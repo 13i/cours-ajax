@@ -1,0 +1,17 @@
+
+/* Bootstrap */
+@import url("https://cdn.jsdelivr.net/npm/bootswatch@5.1.3/dist/slate/bootstrap.min.css");
+
+/* Skeleton */
+@import url("https://cdn.jsdelivr.net/npm/skeleton-screen-css@1.0.1/dist/index.min.css");
+
+/* Message d'erreur des formulaires */
+.error {
+    color: red;
+    font-size: 0.8em;
+}
+
+/* Logo */
+header img {
+    max-width: 130px;
+}
