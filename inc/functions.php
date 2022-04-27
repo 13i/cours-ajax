@@ -61,9 +61,30 @@ function createCours(){
 
 function readCours($id){
 
+    // Connexion BDD
+    $link = getMysqlConnexion();
+
+    // REQUÊTE
+    $sql = "SELECT * FROM cours WHERE id=$id";
+    $query = mysqli_query($link, $sql);     
+    $c = mysqli_fetch_array($query); 
+
+    // On affiche l'HTML
+    require_once "tpl/read.php";
 }
 
 function updateCours($id){
+
+    // Connexion BDD
+    $link = getMysqlConnexion();
+
+    // REQUÊTE
+    $sql = "SELECT * FROM cours WHERE id=$id";
+    $query = mysqli_query($link, $sql);     
+    $c = mysqli_fetch_array($query); 
+
+    // On affiche l'HTML
+    require_once "tpl/update.php";
 
 }
 
